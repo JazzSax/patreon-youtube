@@ -10,7 +10,7 @@ export interface Membership extends Record<TierAccess, MembershipLevel> {
 export const membershipMap: Record<MembershipLevel, string> = {
   1: "Lvl 1: Backstage Pass",
   2: "Lvl 2: Crew Member",
-  3: "Lvl 3: VIP ",
+  3: "Lvl 3: VIP Access",
 };
 export const tierMap: Record<TierAccess, MembershipLevel> = {
   backstage: 1,
