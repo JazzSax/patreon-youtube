@@ -1,12 +1,10 @@
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "../live";
-import { url } from "inspector";
 
 const siteSettingsQuery = defineQuery(`*[_type == "siteSettings"][0]{
  ...,
  mainHeroImage{
     ...,
-
     asset->{
         _id,
         url

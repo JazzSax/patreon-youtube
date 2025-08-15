@@ -3,6 +3,7 @@ import "../globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import { SanityLive } from "@/sanity/lib/live";
+import SchematicProvider from "@/components/Schematic/SchematicProvider";
 
 export const metadata: Metadata = {
   title: "Patreon Youtube build Clerk",
@@ -16,13 +17,17 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-       <Header/>
-       <html lang="en">
        
-      <body >
-       {children}
-      </body>
-      <SanityLive/>
+       <html lang="en">
+      <SchematicProvider>
+         
+         <body >
+          <Header/>
+          {children} 
+        </body>
+        <SanityLive/>
+      </SchematicProvider>
+     
     </html>
     </ClerkProvider>
    
