@@ -2,6 +2,7 @@
   "name": "patreon-youtube",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -11,6 +12,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.30.0",
+    "@icons-pack/react-simple-icons": "^13.7.0",
     "@radix-ui/react-slot": "^1.2.3",
     "@sanity/client": "^7.8.2",
     "@sanity/image-url": "^1.1.0",
@@ -26,6 +28,7 @@
     "next-sanity": "^10.0.10",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-refractor": "^3.1.0",
     "sanity": "^4.3.0",
     "styled-components": "^6.1.19",
     "tailwind-merge": "^3.3.1"

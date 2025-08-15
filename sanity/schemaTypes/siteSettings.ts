@@ -78,6 +78,7 @@ export default defineType({
       of: [
         defineArrayMember({
           type: "object",
+          name: "socialLink",
           fields: [
             defineField({
               name: "platform",
