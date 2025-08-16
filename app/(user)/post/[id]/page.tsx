@@ -8,6 +8,7 @@ import { ArrowLeftIcon } from 'lucide-react';
 import Badge from '@/components/Badge/Badge';
 import CreatedAt from '@/components/CreatedAt';
 import { PortableText } from '@portabletext/react';
+import Comments from '@/components/Comments';
 
 
 async function PostPage({ params } : { params: Promise<{ id: string }>}) {
@@ -56,6 +57,12 @@ async function PostPage({ params } : { params: Promise<{ id: string }>}) {
                     </div>
                 )}
             </div>
+
+            <div className="max-w-3xl mx-auto px-4 py-12">
+                <Comments post={post} />
+            </div>
+
+
         </div>
     </main>
   )
