@@ -44,5 +44,19 @@ export default defineType({
       description: "The content of the comment",
       validation: (Rule) => Rule.required().min(1).max(500),
     }),
+    defineField({
+      name: "userImageUrl",
+      title: "User Image URL",
+      type: "url",
+      description: "URL of the user's profile image",
+      validation: (Rule) => Rule.uri({ allowRelative: true }),
+    }),
+    defineField({
+      name: "email",
+      title: "Email",
+      type: "string",
+      description: "Email of the user commenting",
+      validation: (Rule) => Rule.required().email(),
+    }),
   ],
 });
