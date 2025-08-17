@@ -27,7 +27,7 @@ export default defineType({
       title: "Post",
       type: "reference",
       to: [{ type: "post" }],
-      description: "Reference to the post this comment belongs to",
+
       validation: (Rule) => Rule.required(),
     }),
     defineField({

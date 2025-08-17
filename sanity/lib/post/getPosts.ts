@@ -3,7 +3,7 @@ import { sanityFetch } from "../live";
 
 const getPostsQuery = defineQuery(`*[_type=="post"] | order(_createdAt desc) {
     ...,
-    "coments": *[_type=="comment"] && post._ref == ^._id | order(createdAt desc)
+    "comments": *[_type=="comment"] && post._ref == ^._id | order(createdAt desc)
 
     }`);
 

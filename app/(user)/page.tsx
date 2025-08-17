@@ -3,9 +3,11 @@ import HeroBanner from '@/components/HeroBanner';
 import InformationPanel from '@/components/InformationPanel';
 import { getPosts } from "@/sanity/lib/post/getPosts";
 import PostList from '@/components/PostList';
+import { GetPostsQueryResult } from "@/sanity.types";
+
 export default async function Home({searchParams,}:{searchParams: Promise<{ tier:string }>}) {
   const { tier } = await searchParams;
-  const posts = await getPosts(tier);
+  const posts = await getPosts(tier) as GetPostsQueryResult;
   return (
     <div >
       {/* Hero Banner */}

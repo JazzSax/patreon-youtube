@@ -1,9 +1,9 @@
 'use client'
 import React from 'react'
-import GetPostsQueryResult from "@/sanity.types";
+import { GetPostsQueryResult } from "@/sanity.types";
 import { useUser } from "@clerk/nextjs"
 import useMembershipTier from '@/hooks/useMembershipTier';
-import { tierMap } from '@/types/types';
+import { tierMap, TierAccess } from '@/types/types';
 import Link from 'next/link';
 import LockedPost from './LockedPost';
 import Image from 'next/image';
@@ -13,7 +13,7 @@ import { PortableText } from '@portabletext/react';
 import { MessageCircleIcon } from 'lucide-react';
 import CreatedAt from './CreatedAt';
 
-function Post({ post }:{ post:GetPostsQueryResult[number]}) {
+function Post({ post }:{ post: GetPostsQueryResult[number] }) {
     const membershipTier = useMembershipTier();
     const { user } = useUser();
     const postMembershipLevel = tierMap[post.tierAccess as TierAccess];

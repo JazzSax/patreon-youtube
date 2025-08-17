@@ -5,6 +5,9 @@ import { urlFor } from '@/sanity/lib/image';
 import { getSocialIcon, SocialPlatform } from '@/lib/socialToIcon';
 import MemberButton from './MemberButton';
 import { getPosts } from '@/sanity/lib/post/getPosts';
+import Link from 'next/link';
+
+
 async function InformationPanel() {
     const siteSettings = await getSiteSettings();
     const posts = await getPosts();
@@ -51,11 +54,11 @@ async function InformationPanel() {
         {siteSettings?.socialMediaLinks?.map((social) => {
            
             const Icon = getSocialIcon(social.platform as SocialPlatform);
-            return(
-                <a href={social.url} key={social.platform}>
-                    <Icon/>
-                </a>
-            )
+           return (
+            <Link href={social.url || "#"} key={social.platform}>
+                <Icon />
+            </Link>
+            );
         }
         )}
        </div>

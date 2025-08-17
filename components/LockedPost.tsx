@@ -7,7 +7,7 @@ import { urlFor } from "@/sanity/lib/image";
 import  TierBadge from "@/components/Badge/TierBadge";
 import CreatedAt from './CreatedAt';
 
-function LockedPost({ post }: { post: GetPostsQueryResult}) {
+function LockedPost({ post }: { post: GetPostsQueryResult[number] }) {
 
   return (
     <Link href="/pricing">

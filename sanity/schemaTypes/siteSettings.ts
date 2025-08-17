@@ -43,6 +43,14 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      fields: [
+        {
+          name: "alt",
+          title: "Alt Text",
+          type: "string",
+          description: "Alternative text for the main hero image.",
+        },
+      ],
       validation: (Rule: any) => Rule.required(),
     }),
     defineField({

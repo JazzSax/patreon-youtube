@@ -34,7 +34,7 @@ const SchematicWrapped = ({ children }: { children: React.ReactNode }) => {
                         
                 })
             }
-    }, [user, identify]);
+    }, [identify,user]);
     return children;
 }
 
