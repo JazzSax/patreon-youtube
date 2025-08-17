@@ -54,8 +54,9 @@ async function InformationPanel() {
         {siteSettings?.socialMediaLinks?.map((social) => {
            
             const Icon = getSocialIcon(social.platform as SocialPlatform);
+            const href = social.url ?? "#";
            return (
-            <Link href={social.url || "#"} key={social.platform}>
+            <Link href={href} key={social.platform}>
                 <Icon />
             </Link>
             );

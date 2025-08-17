@@ -322,7 +322,7 @@ export type GetPostQueryResult = {
 
 // Source: ./sanity/lib/post/getPosts.ts
 // Variable: getPostsQuery
-// Query: *[_type=="post"] | order(_createdAt desc) {    ...,    "comments": *[_type=="comment"] && post._ref == ^._id | order(createdAt desc)    }
+// Query: *[_type=="post"] | order(_createdAt desc) {    ...,    "comments": *[_type=="comment" && post._ref == ^._id] | order(createdAt desc)    }
 export type GetPostsQueryResult = Array<{
   _id: string;
   _type: "post";
@@ -362,7 +362,23 @@ export type GetPostsQueryResult = Array<{
     alt?: string;
     _type: "image";
   };
-  comments: null;
+  comments: Array<{
+    _id: string;
+    _type: "comment";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    post?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "post";
+    };
+    name?: string;
+    comment?: string;
+    userImageUrl?: string;
+    email?: string;
+  }>;
 }>;
 // Variable: getPostsQueryWithTier
 // Query: *[_type == "post" && tierAccess == $tier] | order(_createdAt desc){    ...,    "comments": *[_type=="comment" && post._ref == ^._id] | order(createdAt desc)}
@@ -485,7 +501,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"post\" && _id == $id][0] {\n    ...,\n    \"comments\" : *[_type == \"comment\" && post._ref == ^._id] | order(createdAt desc)\n}": GetPostQueryResult;
-    "*[_type==\"post\"] | order(_createdAt desc) {\n    ...,\n    \"comments\": *[_type==\"comment\"] && post._ref == ^._id | order(createdAt desc)\n\n    }": GetPostsQueryResult;
+    "*[_type==\"post\"] | order(_createdAt desc) {\n    ...,\n    \"comments\": *[_type==\"comment\" && post._ref == ^._id] | order(createdAt desc)\n\n    }": GetPostsQueryResult;
     "*[_type == \"post\" && tierAccess == $tier] | order(_createdAt desc){\n    ...,\n    \"comments\": *[_type==\"comment\" && post._ref == ^._id] | order(createdAt desc)}": GetPostsQueryWithTierResult;
     "*[_type == \"siteSettings\"][0]{\n ...,\n mainHeroImage{\n    ...,\n    asset->{\n        _id,\n        url\n\n    }\n },\n}": SiteSettingsQueryResult;
   }

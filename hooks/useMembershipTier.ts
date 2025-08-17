@@ -1,4 +1,5 @@
 "use client";
+
 import { MembershipLevel } from "@/types/types";
 import { useSchematicFlag } from "@schematichq/schematic-react";
 import { useRouter } from "next/navigation";
@@ -31,6 +32,8 @@ function useMembershipTier(): MembershipLevel | null {
     };
     window.addEventListener("plan-changed", handlePlanChanged as EventListener);
 
+    // Cleanup the event listener on component unmount
+    // This prevents memory leaks and ensures the listener is removed when the component is unmounted
     return () => {
       window.removeEventListener(
         "plan-changed",
@@ -41,7 +44,8 @@ function useMembershipTier(): MembershipLevel | null {
 
   if (hasVipContent) return 3;
   if (hasCrewContent) return 2;
-  return 1;
+  if (hasBackstageContent) return 1;
+  return null; // No membership tier available
 }
 
 export default useMembershipTier;

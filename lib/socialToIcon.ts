@@ -21,13 +21,13 @@ const socialToIcon = {
   tiktok: SiTiktok,
   discord: SiDiscord,
   twitch: SiTwitch,
-  other: Link,
+  other: SiGithub, // Default icon for other platforms
 } as const;
 
 export type SocialPlatform = keyof typeof socialToIcon;
 
 export function getSocialIcon(platform: SocialPlatform) {
-  return socialToIcon[platform] || Link;
+  return socialToIcon[platform] || SiGithub;
 }
 
 export default socialToIcon;

@@ -7,12 +7,12 @@ interface BadgeProps{
     className?: string;
     link?: string;
 }
-function Badge({ variant = "simple", tier, className, link }: BadgeProps) {
+function Badge({ variant = "simple", tier,link, className  }: BadgeProps) {
     const baseStyles = "px-3 py-1 rounded-full text-sm font-medium";
     const level = tierMap[tier];
     const label = membershipMap[level];
     const badgeColor = getBadgeColor(level);
-    console.log("Badge Rendered", { tier, level, label, badgeColor });
+    
     if(variant === "interactive" ) {
       console.log("Interactive Badge Rendered", { tier, level, label, badgeColor });
         return(
