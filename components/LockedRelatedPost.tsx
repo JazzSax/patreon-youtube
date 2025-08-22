@@ -26,11 +26,15 @@ function LockedRelatedPost({ post }: { post: GetRelatedPostsQueryResult[number] 
         </div>
     )}
 
-    <div className="p-6 pb-10">
+    <div className="p-4 pb-4">
         <h2 className="text-xl font-semibold text-gray-900 mb-2 pb-6">
             {post.title}
         </h2>
-        <div className="relative">
+        
+        
+        
+    </div>
+    <div className="relative  ">
             <div className="absolute inset-0 opacity-10">
                 <div className="grid grid-cols-6 gap-4">
                     {Array(18).fill(0).map((_,i)=>(
@@ -41,15 +45,12 @@ function LockedRelatedPost({ post }: { post: GetRelatedPostsQueryResult[number] 
             <div className="absolute inset-0 bg-gradiet-to-b from-transparent to-white z-10"/>
                 
                 <div className="absolute inset-0 flex items-center justify-center z-30">
-                    <div className="bg-purple-600 text-white px-6 py-2 rounded-full font-medium hover:bg-purple-700 transition-colors duration-200 flex items-center space-x-2 shadow-lg gap-2">
+                    <div className="bg-purple-600 text-white px-2 py-1 rounded-full font-xs hover:bg-purple-700 transition-colors duration-200 flex items-center  shadow-lg gap-2">
                         <Lock className="w-4 h-4"/>
                         Unlock Premium Content
                     </div>
                 </div>
             </div>
-        
-        
-    </div>
     </article>
     </Link>
   )

@@ -7,7 +7,13 @@ import useMembershipTier from "@/hooks/useMembershipTier";
 import { useUser } from "@clerk/nextjs";
 import { tierMap, TierAccess } from "@/types/types";
 import RelatedPost from "./RelatedPost";
-
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 function RelatedPostsList({ relatedPosts }: { relatedPosts :  GetRelatedPostsQueryResult }) {
 
@@ -18,14 +24,30 @@ function RelatedPostsList({ relatedPosts }: { relatedPosts :  GetRelatedPostsQue
   return (
     <section className="max-w-3xl mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-4">Related Posts</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-        {relatedPosts.map((relatedPost) => (
+       <Carousel
+      opts={{
+        align: "start",
+        loop:true,
+      }}
+      className="w-full "
+    >
+      <CarouselContent>
           
-          <RelatedPost post={relatedPost} key={relatedPost._id} />
-         
-        ))}
-      </div>
+            {relatedPosts.map((relatedPost, index) => (
+            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 ">
+                <RelatedPost post={relatedPost} key={relatedPost._id} />
+            </CarouselItem>
+          
+          ))}
+
+        
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+      
+   
+    
     </section>
   );
 }
