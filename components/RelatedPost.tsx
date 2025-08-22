@@ -3,7 +3,7 @@
 import useMembershipTier from '@/hooks/useMembershipTier';
 import { useUser } from '@clerk/nextjs';
 import { tierMap, TierAccess } from '@/types/types';
-import { GetRelatedPostsQueryResult } from '@/sanity.types';
+import {  GetRelatedPostsQueryResult } from '@/sanity.types';
 import LockedRelatedPost from './LockedRelatedPost';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -14,6 +14,7 @@ import TierBadge from './Badge/TierBadge';
 function RelatedPost({ post }: { post: GetRelatedPostsQueryResult[number] }) {
     const membershipTier = useMembershipTier();
     const { user } = useUser();
+   
     const postMembershipLevel = tierMap[post.tierAccess as TierAccess];
     const isLocked = membershipTier && membershipTier < postMembershipLevel;
     if(isLocked){

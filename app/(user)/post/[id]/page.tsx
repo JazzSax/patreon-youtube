@@ -16,11 +16,9 @@ import RelatedPostList from '@/components/RelatedPostList';
 async function PostPage({ params } : { params: Promise<{ id: string }>}) {
     const { id } = await params;
     const post = await getPost(id);
-   
     const relatedPosts = await getRelatedPosts(id);
-    
-
-
+    console.log("Post data:", post);
+    console.log("Related posts data:", relatedPosts);
     if(!post) return notFound();
   return (
     <main className="min-h-screen bg-white">
@@ -85,9 +83,9 @@ async function PostPage({ params } : { params: Promise<{ id: string }>}) {
             </div>
 
             {/* Related Posts */}
-            {relatedPosts && relatedPosts.length > 0 && (
+            {post.relatedPosts && post.relatedPosts?.length > 0 && (
                 
-                <RelatedPostList posts={relatedPosts} />
+                <RelatedPostList relatedPosts={relatedPosts} />
             )}
 
             <div className="max-w-3xl mx-auto px-4 py-12">

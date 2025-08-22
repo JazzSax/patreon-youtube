@@ -2,19 +2,17 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
-import { GetRelatedPostsQueryResult } from "@/sanity.types";
+import { GetPostQueryResult, GetRelatedPostsQueryResult } from "@/sanity.types";
 import useMembershipTier from "@/hooks/useMembershipTier";
 import { useUser } from "@clerk/nextjs";
 import { tierMap, TierAccess } from "@/types/types";
 import RelatedPost from "./RelatedPost";
 
 
-function RelatedPosts({ posts }: { posts: GetRelatedPostsQueryResult }) {
+function RelatedPostsList({ relatedPosts }: { relatedPosts :  GetRelatedPostsQueryResult }) {
 
-  
-
-  if (posts.length === 0) {
-    return null;
+  if (!relatedPosts|| relatedPosts.length === 0) {
+    return null; // or some fallback UI
   }
  
   return (
@@ -22,13 +20,13 @@ function RelatedPosts({ posts }: { posts: GetRelatedPostsQueryResult }) {
       <h2 className="text-2xl font-bold mb-4">Related Posts</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-        {posts.map((post) => (
+        {relatedPosts.map((relatedPost) => (
           
-          <RelatedPost post={post} key={post._id} />
+          <RelatedPost post={relatedPost} key={relatedPost._id} />
          
         ))}
       </div>
     </section>
   );
 }
-export default RelatedPosts;
+export default RelatedPostsList;

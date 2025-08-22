@@ -50,6 +50,13 @@ export type Post = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  relatedPosts?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "post";
+  }>;
   body?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -278,7 +285,7 @@ export type AllSanitySchemaTypes = Message | Comment | Post | Tag | SiteSettings
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/post/getPost.ts
 // Variable: getPostQuery
-// Query: *[_type == "post" && _id == $id][0] {    ...,    "comments" : *[_type == "comment" && post._ref == ^._id] | order(createdAt desc),    tags[]->{        _id,        title    }}
+// Query: *[_type == "post" && _id == $id][0] {    ...,    "relatedPosts": relatedPosts[]->{      _id,      title,      coverImage,      tierAccess,      tags[]->{        _id,        title      }    },    "comments" : *[_type == "comment" && post._ref == ^._id] | order(createdAt desc),    tags[]->{        _id,        title    }}
 export type GetPostQueryResult = {
   _id: string;
   _type: "post";
@@ -286,6 +293,28 @@ export type GetPostQueryResult = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  relatedPosts: Array<{
+    _id: string;
+    title: string | null;
+    coverImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+    tierAccess: "backstage" | "crew" | "vip" | null;
+    tags: Array<{
+      _id: string;
+      title: string | null;
+    }> | null;
+  }> | null;
   body?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -351,6 +380,13 @@ export type GetPostsQueryResult = Array<{
   _updatedAt: string;
   _rev: string;
   title?: string;
+  relatedPosts?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "post";
+  }>;
   body?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -414,6 +450,13 @@ export type GetPostsQueryWithTierResult = Array<{
   _updatedAt: string;
   _rev: string;
   title?: string;
+  relatedPosts?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "post";
+  }>;
   body?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -471,34 +514,11 @@ export type GetPostsQueryWithTierResult = Array<{
 
 // Source: ./sanity/lib/post/getRelatedPosts.ts
 // Variable: getRelatedPostsQuery
-// Query: *[_type == "post" && _id != $id     && count(tags[@._ref in *[_type == "post" && _id == $id][0].tags[]._ref]) > 0    ] {    ...,    tags[]->{        _id,        title    }    }
+// Query: *[_type == "post" && _id == $id][0]{    relatedPosts[]->{      _id,      title,      coverImage,      tierAccess,      tags[]->{        _id,        title      }    }  }.relatedPosts
 export type GetRelatedPostsQueryResult = Array<{
   _id: string;
-  _type: "post";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  body?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  tierAccess?: "backstage" | "crew" | "vip";
-  coverImage?: {
+  title: string | null;
+  coverImage: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -510,12 +530,13 @@ export type GetRelatedPostsQueryResult = Array<{
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
-  };
+  } | null;
+  tierAccess: "backstage" | "crew" | "vip" | null;
   tags: Array<{
     _id: string;
     title: string | null;
   }> | null;
-}>;
+}> | null;
 
 // Source: ./sanity/lib/siteSettings/getSiteSettings.ts
 // Variable: siteSettingsQuery
@@ -577,10 +598,10 @@ export type SiteSettingsQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"post\" && _id == $id][0] {\n    ...,\n    \"comments\" : *[_type == \"comment\" && post._ref == ^._id] | order(createdAt desc),\n    tags[]->{\n        _id,\n        title\n    }\n}": GetPostQueryResult;
+    "*[_type == \"post\" && _id == $id][0] {\n    ...,\n    \"relatedPosts\": relatedPosts[]->{\n      _id,\n      title,\n      coverImage,\n      tierAccess,\n      tags[]->{\n        _id,\n        title\n      }\n    },\n    \"comments\" : *[_type == \"comment\" && post._ref == ^._id] | order(createdAt desc),\n    tags[]->{\n        _id,\n        title\n    }\n}": GetPostQueryResult;
     "*[_type==\"post\"] | order(_createdAt desc) {\n    ...,\n    \"comments\": *[_type==\"comment\" && post._ref == ^._id] | order(createdAt desc),\n    tags[]->{\n        _id,\n        title\n    }\n\n    }": GetPostsQueryResult;
     "*[_type == \"post\" && tierAccess == $tier] | order(_createdAt desc){\n    ...,\n    \"comments\": *[_type==\"comment\" && post._ref == ^._id] | order(createdAt desc),\n    tags[]->{\n        _id,\n        title\n    }}": GetPostsQueryWithTierResult;
-    "\n    *[_type == \"post\" && _id != $id \n    && count(tags[@._ref in *[_type == \"post\" && _id == $id][0].tags[]._ref]) > 0\n    ] {\n    ...,\n    tags[]->{\n        _id,\n        title\n    }\n    }\n\n": GetRelatedPostsQueryResult;
+    "\n  *[_type == \"post\" && _id == $id][0]{\n    relatedPosts[]->{\n      _id,\n      title,\n      coverImage,\n      tierAccess,\n      tags[]->{\n        _id,\n        title\n      }\n    }\n  }.relatedPosts\n": GetRelatedPostsQueryResult;
     "*[_type == \"siteSettings\"][0]{\n ...,\n mainHeroImage{\n    ...,\n    asset->{\n        _id,\n        url\n\n    }\n },\n}": SiteSettingsQueryResult;
   }
 }
