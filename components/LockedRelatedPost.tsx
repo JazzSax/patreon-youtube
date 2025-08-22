@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Lock, MessageCircleIcon } from "lucide-react";
 import { urlFor } from "@/sanity/lib/image";
 import  TierBadge from "@/components/Badge/TierBadge";
-import CreatedAt from './CreatedAt';
+
 
 function LockedRelatedPost({ post }: { post: GetRelatedPostsQueryResult[number] }) {
 

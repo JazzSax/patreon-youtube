@@ -155,7 +155,17 @@ export type SiteSettings = {
     _type: "image";
   };
   socialMediaLinks?: Array<{
-    platform?: "instagram" | "youtube" | "facebook" | "x" | "tiktok" | "pinterest" | "github" | "discord" | "twitch" | "other";
+    platform?:
+      | "instagram"
+      | "youtube"
+      | "facebook"
+      | "x"
+      | "tiktok"
+      | "pinterest"
+      | "github"
+      | "discord"
+      | "twitch"
+      | "other";
     url?: string;
     _type: "socialLink";
     _key: string;
@@ -281,7 +291,23 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Message | Comment | Post | Tag | SiteSettings | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes =
+  | Message
+  | Comment
+  | Post
+  | Tag
+  | SiteSettings
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageHotspot
+  | SanityImageCrop
+  | SanityFileAsset
+  | SanityImageAsset
+  | SanityImageMetadata
+  | Geopoint
+  | Slug
+  | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/post/getPost.ts
 // Variable: getPostQuery
@@ -536,7 +562,7 @@ export type GetRelatedPostsQueryResult = Array<{
     _id: string;
     title: string | null;
   }> | null;
-}> | null;
+}>;
 
 // Source: ./sanity/lib/siteSettings/getSiteSettings.ts
 // Variable: siteSettingsQuery
@@ -586,7 +612,17 @@ export type SiteSettingsQueryResult = {
     _type: "image";
   };
   socialMediaLinks?: Array<{
-    platform?: "discord" | "facebook" | "github" | "instagram" | "other" | "pinterest" | "tiktok" | "twitch" | "x" | "youtube";
+    platform?:
+      | "discord"
+      | "facebook"
+      | "github"
+      | "instagram"
+      | "other"
+      | "pinterest"
+      | "tiktok"
+      | "twitch"
+      | "x"
+      | "youtube";
     url?: string;
     _type: "socialLink";
     _key: string;
@@ -598,10 +634,10 @@ export type SiteSettingsQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"post\" && _id == $id][0] {\n    ...,\n    \"relatedPosts\": relatedPosts[]->{\n      _id,\n      title,\n      coverImage,\n      tierAccess,\n      tags[]->{\n        _id,\n        title\n      }\n    },\n    \"comments\" : *[_type == \"comment\" && post._ref == ^._id] | order(createdAt desc),\n    tags[]->{\n        _id,\n        title\n    }\n}": GetPostQueryResult;
-    "*[_type==\"post\"] | order(_createdAt desc) {\n    ...,\n    \"comments\": *[_type==\"comment\" && post._ref == ^._id] | order(createdAt desc),\n    tags[]->{\n        _id,\n        title\n    }\n\n    }": GetPostsQueryResult;
-    "*[_type == \"post\" && tierAccess == $tier] | order(_createdAt desc){\n    ...,\n    \"comments\": *[_type==\"comment\" && post._ref == ^._id] | order(createdAt desc),\n    tags[]->{\n        _id,\n        title\n    }}": GetPostsQueryWithTierResult;
-    "\n  *[_type == \"post\" && _id == $id][0]{\n    relatedPosts[]->{\n      _id,\n      title,\n      coverImage,\n      tierAccess,\n      tags[]->{\n        _id,\n        title\n      }\n    }\n  }.relatedPosts\n": GetRelatedPostsQueryResult;
-    "*[_type == \"siteSettings\"][0]{\n ...,\n mainHeroImage{\n    ...,\n    asset->{\n        _id,\n        url\n\n    }\n },\n}": SiteSettingsQueryResult;
+    '*[_type == "post" && _id == $id][0] {\n    ...,\n    "relatedPosts": relatedPosts[]->{\n      _id,\n      title,\n      coverImage,\n      tierAccess,\n      tags[]->{\n        _id,\n        title\n      }\n    },\n    "comments" : *[_type == "comment" && post._ref == ^._id] | order(createdAt desc),\n    tags[]->{\n        _id,\n        title\n    }\n}': GetPostQueryResult;
+    '*[_type=="post"] | order(_createdAt desc) {\n    ...,\n    "comments": *[_type=="comment" && post._ref == ^._id] | order(createdAt desc),\n    tags[]->{\n        _id,\n        title\n    }\n\n    }': GetPostsQueryResult;
+    '*[_type == "post" && tierAccess == $tier] | order(_createdAt desc){\n    ...,\n    "comments": *[_type=="comment" && post._ref == ^._id] | order(createdAt desc),\n    tags[]->{\n        _id,\n        title\n    }}': GetPostsQueryWithTierResult;
+    '\n  *[_type == "post" && _id == $id][0]{\n    relatedPosts[]->{\n      _id,\n      title,\n      coverImage,\n      tierAccess,\n      tags[]->{\n        _id,\n        title\n      }\n    }\n  }.relatedPosts\n': GetRelatedPostsQueryResult;
+    '*[_type == "siteSettings"][0]{\n ...,\n mainHeroImage{\n    ...,\n    asset->{\n        _id,\n        url\n\n    }\n },\n}': SiteSettingsQueryResult;
   }
 }
