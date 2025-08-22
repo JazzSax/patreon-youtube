@@ -7,6 +7,7 @@ import { GetPostsQueryResult } from "@/sanity.types";
 
 export default async function Home({searchParams,}:{searchParams: Promise<{ tier:string }>}) {
   const { tier } = await searchParams;
+  console.log("Tier from search params:", tier);
   const posts = await getPosts(tier) as GetPostsQueryResult;
   return (
     <div >

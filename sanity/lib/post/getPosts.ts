@@ -3,14 +3,22 @@ import { sanityFetch } from "../live";
 
 const getPostsQuery = defineQuery(`*[_type=="post"] | order(_createdAt desc) {
     ...,
-    "comments": *[_type=="comment" && post._ref == ^._id] | order(createdAt desc)
+    "comments": *[_type=="comment" && post._ref == ^._id] | order(createdAt desc),
+    tags[]->{
+        _id,
+        title
+    }
 
     }`);
 
 const getPostsQueryWithTier =
   defineQuery(`*[_type == "post" && tierAccess == $tier] | order(_createdAt desc){
     ...,
-    "comments": *[_type=="comment" && post._ref == ^._id] | order(createdAt desc)}`);
+    "comments": *[_type=="comment" && post._ref == ^._id] | order(createdAt desc),
+    tags[]->{
+        _id,
+        title
+    }}`);
 
 export async function getPosts(tier?: string) {
   if (tier) {

@@ -3,6 +3,7 @@ import siteSettings from "./siteSettings";
 import post from "./post";
 import comment from "./comment";
 import message from "./message";
+import tag from "./tag";
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [siteSettings, post, comment, message],
+  types: [siteSettings, tag, post, comment, message],
 };

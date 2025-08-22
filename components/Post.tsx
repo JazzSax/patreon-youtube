@@ -76,6 +76,21 @@ function Post({ post }:{ post: GetPostsQueryResult[number] }) {
                     <PortableText value={post.body}/>
                 </div>
             )}
+            {post.tags && post.tags.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                    {post.tags.map((tag) => (
+                    <span
+                        key={tag._id}
+                        className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full"
+                    >
+                        {tag.title}
+                    </span>
+                    ))}
+                </div>
+                )}
+
+
+          
                 <div className="flex items-center justify-between mt-4">
                 <div className="text-sm text-gray-500 text-right border border-gray-200 rounded-full px-4 py-1 flex items-center gap-2">
                     <MessageCircleIcon className="w-4 h-4"/>

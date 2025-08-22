@@ -29,6 +29,21 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "relatedPosts",
+      title: "Related Posts",
+      type: "array",
+      description: "Posts that share one or more tags with this post.",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "post" }],
+        },
+      ],
+      options: {
+        layout: "grid",
+      },
+    }),
+    defineField({
       name: "body",
       title: "Body",
       type: "array",
@@ -64,6 +79,21 @@ export default defineType({
           description: "Alternative text for the cover image.",
         },
       ],
+    }),
+    defineField({
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      description: "Add one or more tags to categorize this post.",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "tag" }],
+        },
+      ],
+      options: {
+        layout: "tags", // shows them as little pills
+      },
     }),
   ],
 });
