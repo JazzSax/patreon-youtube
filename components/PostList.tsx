@@ -3,10 +3,15 @@ import { GetPostsQueryResult } from '@/sanity.types';
 import { getSiteSettings } from '@/sanity/lib/siteSettings/getSiteSettings';
 import { ClerkLoaded } from '@clerk/nextjs';
 import FilterByTierSelect from './FilterByTierSelect';
-
+import PostFilters from './PostFilters';
 import PostsWithClerk from './PostClerk';
 
-async function PostList({ posts }: { posts: GetPostsQueryResult }) {
+
+interface PostListProps {
+  posts: GetPostsQueryResult;
+  refetchPosts: () => Promise<void>; // server action type
+}
+async function PostList({ posts,refetchPosts }: PostListProps) {
     const siteSettings = await getSiteSettings();
 
   return (
@@ -19,7 +24,8 @@ async function PostList({ posts }: { posts: GetPostsQueryResult }) {
         </div>
 
         <div className="flex justify-center items-center mb-4">
-            <FilterByTierSelect/>
+           
+          <PostFilters refetchPosts={refetchPosts}/>
         </div>
 
         <div className="grid grid-cols-1 gap-6">

@@ -69,8 +69,13 @@ function Post({ post }:{ post: GetPostsQueryResult[number] }) {
                 </div>
             )}
 
-          
+           
+         
             <div className="p-6">
+                
+                <h2 className="text-xl font-semibold text-gray-900 mb-2 ">
+                    {post.title}
+                </h2>
                   {post.body && (
                 <div className="text-gray-600 prose">
                     <PortableText value={post.body}/>

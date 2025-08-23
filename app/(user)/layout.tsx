@@ -6,6 +6,8 @@ import { SanityLive } from "@/sanity/lib/live";
 import SchematicProvider from "@/components/Schematic/SchematicProvider";
 import { Toaster } from "@/components/ui/sonner";
 import DMButton from "@/components/DMButton";
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
+
 
 export const metadata: Metadata = {
   title: "Patreon Youtube build Clerk",
@@ -24,12 +26,17 @@ export default function RootLayout({
       <SchematicProvider>
          
          <body >
+                   <NuqsAdapter>
           <Header/>
-          {children} 
+ 
+             {children} 
+       
+         
           <div className="fixed bottom-4 right-4">
             <DMButton />
           </div>
           <Toaster position="bottom-center"/>
+             </NuqsAdapter>
         </body>
         <SanityLive/>
       </SchematicProvider>

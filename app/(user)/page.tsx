@@ -4,23 +4,37 @@ import InformationPanel from '@/components/InformationPanel';
 import { getPosts } from "@/sanity/lib/post/getPosts";
 import PostList from '@/components/PostList';
 import { GetPostsQueryResult } from "@/sanity.types";
+import { loadSearchParams } from './searchParams';
+import type { SearchParams } from 'nuqs/server';
+import { revalidateTag } from "next/cache";
 
-export default async function Home({searchParams,}:{searchParams: Promise<{ tier:string }>}) {
-  const { tier } = await searchParams;
-  console.log("Tier from search params:", tier);
-  const posts = await getPosts(tier) as GetPostsQueryResult;
+type PageProps = {
+  searchParams: Promise<SearchParams>
+}
+
+
+export default async function Home({ searchParams }: PageProps) {
+  const { tier, search } = await loadSearchParams(searchParams);
+    console.log('Filter params:', { tier, search });
+  const posts = await getPosts(tier, search) as GetPostsQueryResult;
+  console.log('Fetched posts:', posts.length);
+
+  async function refetchPosts(){
+    "use server"
+    revalidateTag("posts");
+  }
   return (
     <div >
       {/* Hero Banner */}
       <HeroBanner/>
       {/* Information Panel */}
       <div className="-mt-20 border-b border-gray-200">
-              <InformationPanel/>
+            <InformationPanel/>
       </div>
 
       {/* Post */}
 
-     <PostList posts={posts}/>
+     <PostList posts={posts} refetchPosts={refetchPosts}/>
     </div>
   );
 }
