@@ -17,7 +17,7 @@ export async function sendMessage(message: string) {
     });
 
     const feature = entitlements.data.features.find(
-      (entitlement) => entitlement.feature?.eventSubtype === "send-dm"
+      (entitlement) => entitlement.feature?.eventSubtype === "send-dm",
     );
     const dmUsage = feature?.usage || 0;
     const dmAllocation = feature?.allocation || 0;
